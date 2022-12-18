@@ -1,0 +1,58 @@
+{% extends '/layout/main.html' %}
+{% set title = 'Tambah Mahasiswa' %}
+{% set page_active = 'mahasiswa' %}
+
+{% block _style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block _content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h3 class="text-center">Tambah Mahasiswa</h3>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="mb-1">
+                    <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" required>
+                    
+                </div>
+                <div class="mb-1">
+                    <label for="nim" class="form-label">NIM</label>
+                    <input type="number" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM" required>
+                    
+                </div>
+                <div class="mb-1">
+                    <label for="jurusan" class="form-label">Jurusan</label>
+                    <select class="form-select" aria-label="Default select example" id="jurusan" name="jurusan">
+                        <option selected>--Pilih Jurusan--</option>
+                        {% for j in jurusan %}
+                        <option value="{{ j.jurusan }}">{{ j.jurusan }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                </div>
+                <div class="mb-1">
+                    <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                    <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Masukkan Tanggal Lahir">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email">
+                </div>
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Masukkan Foto Profil</label>
+                    <input class="form-control" type="file" id="foto" name="foto">
+                </div>
+                
+                <div class="">
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

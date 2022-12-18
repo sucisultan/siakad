@@ -1,0 +1,69 @@
+{% extends '/layout/main.html' %}
+{% set title = 'Daftar Mahasiswa' %}
+{% set page_active = 'mahasiswa' %}
+
+{% block _style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block _content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-6 mt-2">Daftar Jrurusan</h1>
+            <br>
+        </div>
+        <form action="" method="post">
+            <label for="jurusan" class="form-tabel">Jurusan</label>
+            <input type="text" class="fom-control" placeholder="Masukkan Jurusan" required id="jurusan" name="jurusan">
+            <button type="submit" class="btn btn-success">Tambah Jurusan</button>
+        </form>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Jurusan</th>
+                        <th scope="col">Aksi</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt in data | sort(attribute='jurusan') %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ dt.jurusan }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteJurusan('{{ dt.id }}')">Hapus Jurusan</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block _script %}
+<script>
+function deleteJurusan(uid) {
+        var hapus = confirm('Apakah anda yakin menghapus jurusan ?')
+        if (hapus) {
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('jurusanapp.delete_jurusan') }}",
+                data: {"uid": uid},
+                success : function() {
+                    location.reload()
+                }
+            })
+        }
+    }
+</script>
+
+{% endblock %}

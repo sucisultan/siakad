@@ -1,0 +1,82 @@
+{% extends '/layout/main.html' %}
+{% set title = 'Daftar Mahasiswa' %}
+{% set page_active = 'mahasiswa' %}
+
+{% block _style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block _content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-6 mt-2">Daftar Mahasiswa</h1>
+            <br>
+            <a href="/mahasiswa/tambah" class="btn btn-success">Tambah Mahasiswa</a>
+            
+        </div>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Nama Lengkap</th>
+                        <th scope="col">NIM</th>
+                        <th scope="col">Jurusan</th>
+                        <th>Status</th>
+                        <th scope="col">Aksi</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt in data %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>
+                            <a href=""></a>
+                            <img src="{{ dt.foto or '/img/default.png'}}" alt="foto" width="60px" class="rounded-circle">
+                        </td>
+                        <td>{{ dt.nama_lengkap }}</td>
+                        <td>{{ dt.nim }}</td>
+                        <td>{{ dt.jurusan }}</td>
+                        <td>
+                            {% if dt.is_active == true %}
+                            <span class="badge badge-pill bg-success">Aktif</span>
+                            {% else %}
+                            <span class="badge badge-pill bg-danger">Tidak Aktif</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/mahasiswa/{{ dt.id }}" class="btn btn-success btn-sm">Lihat Profil Mahasiswa</a>
+                            <a href="/mahasiswa/edit/{{ dt.id }}" class="btn btn-primary btn-sm">Edit Mahasiswa</a>
+                            <button class="btn btn-danger btn-sm" onclick="deleteMahasiswa('{{ dt.id }}')">Hapus Mahasiswa</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block _script %}
+<script>
+function deleteMahasiswa(uid) {
+        var hapus = confirm('Apakah anda yakin menghapus mahasiswa ?')
+        if (hapus) {
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('mhsapp.delete_mahasiswa') }}",
+                data: {"uid": uid},
+                success : function() {
+                    location.reload()
+                }
+            })
+        }
+    }
+</script>
+{% endblock %}

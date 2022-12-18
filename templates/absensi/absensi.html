@@ -1,0 +1,118 @@
+{% extends '/layout/main.html' %}
+{% set title = 'Absensi' %}
+{% set page_active = 'Absensi' %}
+
+{% block _style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block _content %}
+<div class="container">
+    <div class="row mt-4">
+        <h1 class="display-6 mt-1">Absensi Mahasiswa</h1>
+        <!-- diambil dari model getbootstrap -->
+        <button type="button" 
+        class="btn btn-primary btn-sm w-25" 
+        data-bs-toggle="modal" data-bs-target="#jadwal_kuliah">Tambah Jadwal
+        </button>
+        <!-- selesai diambil dari model getbootstrap -->
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Mata Kuliah</th>
+                        <th scope="col">Hari</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Tempat</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt in data | sort(attribute='jurusan') %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ dt.jurusan }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteJurusan('{{ dt.id }}')">Hapus
+                                Jurusan</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" 
+                id="exampleModalLabel"
+                >Tambah Jadwal Mata Kuliah</h1>
+                <button type="button" 
+                class="btn-close" 
+                data-bs-dismiss="modal" 
+                aria-label="Close"></button>
+            </div>
+            <form action="" method="post">
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label for="mata_kuliah" class="form-label">Mata Kuliah</label>
+                        <input type="text" 
+                        class="form-control" 
+                        id="mata_kuliah" 
+                        name="mata_kuliah" 
+                        placeholder="Masukkan Mata Kuliah" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="hari" class="form-label">Hari</label>
+                        <input type="text" 
+                        class="form-control" 
+                        id="hari" 
+                        name="hari" 
+                        placeholder="Masukkan Hari" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="tanggal" class="form-label">Tanggal</label>
+                        <input type="text" 
+                        class="form-control" 
+                        id="tanggal" 
+                        name="tanggal" 
+                        placeholder="Masukkan Tanggal" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="tempat" class="form-label">Tempat</label>
+                        <input type="text" 
+                        class="form-control" 
+                        id="Tempat" 
+                        name="Tempat" 
+                        placeholder="Masukkan Tanggal" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="mahasiswa" class="form-label">Mahasiswa</label>
+                        <input type="text" 
+                        class="form-control" 
+                        id="Mahasiswa" 
+                        name="Mahasiswa" 
+                        placeholder="Masukkan List Mahasiswa" required>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
